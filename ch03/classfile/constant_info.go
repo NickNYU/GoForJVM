@@ -20,3 +20,18 @@ const (
 type ConstantInfo interface {
 	readInfo(reader *ClassReader)
 }
+
+func readConstantInfo(reader *ClassReader, pool ConstantPool) ConstantInfo {
+	tag := reader.readUint8()
+	constant := newConstantInfo(tag, pool)
+	constant.readInfo(reader)
+	return constant
+}
+
+func newConstantInfo(tag uint8, pool ConstantPool) ConstantInfo {
+	switch tag {
+	case CONSTANT_INTEGER:
+		return &ConstantIntegerInfo{}
+
+	}
+}
