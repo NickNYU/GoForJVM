@@ -19,7 +19,7 @@ func (self *ConstantUtf8Info) readInfo(reader *ClassReader) {
 	self.str = decodeMUTF8(bytes)
 }
 
-func decodeMUTF8(bytes []byte) string  {
+func decodeMUTF8(bytes []byte) string {
 	utflen := len(bytes)
 	chararr := make([]uint16, utflen)
 

@@ -16,10 +16,9 @@ type ClassFile struct {
 	attributes   []AttributeInfo
 }
 
-
 func Parse(classData []byte) (classffile *ClassFile, err error) {
 	defer func() {
-		if r:= recover(); r != nil {
+		if r := recover(); r != nil {
 			var ok bool
 			err, ok = r.(error)
 			if !ok {
