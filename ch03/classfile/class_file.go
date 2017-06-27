@@ -68,7 +68,7 @@ func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
 	panic("java.lang.UnsupportedClassVersionError!")
 }
 
-func (self *ClassFile) MinorVersion(reader *ClassReader) uint16 {
+func (self *ClassFile) MinorVersion() uint16 {
 	return self.minorVersion
 }
 func (self *ClassFile) MajorVersion() uint16 {
