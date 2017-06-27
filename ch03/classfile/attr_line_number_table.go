@@ -17,18 +17,17 @@ type LineNumberTableAttribute struct {
 }
 
 type LineNumberTableEntry struct {
-	startPC uint16
+	startPC    uint16
 	lineNumber uint16
 }
 
 func (self *LineNumberTableAttribute) readInfo(reader *ClassReader) {
-	len := reader.readUint16()
-	self.lineNumberTable = make([]*LineNumberTableEntry, len)
-	for i := range(self.lineNumberTable) {
+	length := reader.readUint16()
+	self.lineNumberTable = make([]*LineNumberTableEntry, length)
+	for i := range self.lineNumberTable {
 		self.lineNumberTable[i] = &LineNumberTableEntry{
-			startPC: reader.readUint16(),
+			startPC:    reader.readUint16(),
 			lineNumber: reader.readUint16(),
 		}
 	}
 }
-

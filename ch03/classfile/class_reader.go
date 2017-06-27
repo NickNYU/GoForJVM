@@ -32,8 +32,8 @@ func (self *ClassReader) readUint64() uint64 {
 
 // The size of the table will be provided by the table head
 func (self *ClassReader) readUint16s() []uint16 {
-	len := self.readUint16()
-	arr := make([]uint16, len)
+	length := self.readUint16()
+	arr := make([]uint16, length)
 	for i := range arr {
 		arr[i] = self.readUint16()
 	}

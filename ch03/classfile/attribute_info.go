@@ -45,10 +45,10 @@ func newAttributeInfo(attrName string, attrLen uint32, pool ConstantPool) Attrib
 	case "LocalVariableTable":
 		return &LocalVariableTableAttribute{}
 	case "SourceFile":
-		return &SourceFileAttribute{}
+		return &SourceFileAttribute{pool: pool}
 	case "Synthetic":
 		return &SyntheticAttribute{}
 	default:
-		return &UnparsedAttribute{}
+		return &UnparsedAttribute{attrName, attrLen, nil}
 	}
 }
