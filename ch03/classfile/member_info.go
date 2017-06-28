@@ -1,40 +1,56 @@
 package classfile
 
+/*
+field_info {
+    u2             access_flags;
+    u2             name_index;
+    u2             descriptor_index;
+    u2             attributes_count;
+    attribute_info attributes[attributes_count];
+}
+method_info {
+    u2             access_flags;
+    u2             name_index;
+    u2             descriptor_index;
+    u2             attributes_count;
+    attribute_info attributes[attributes_count];
+}
+*/
+
 type MemberInfo struct {
-	constantPool    ConstantPool
-	accessFlag      uint16
+	cp              ConstantPool
+	accessFlags     uint16
 	nameIndex       uint16
 	descriptorIndex uint16
 	attributes      []AttributeInfo
 }
 
-func readMembers(reader *ClassReader, pool ConstantPool) []*MemberInfo {
-	length := reader.readUint16()
-	memberInfos := make([]*MemberInfo, length)
-	for i := range memberInfos {
-		memberInfos[i] = readMember(reader, pool)
+// read field or method table
+func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
+	memberCount := reader.readUint16()
+	members := make([]*MemberInfo, memberCount)
+	for i := range members {
+		members[i] = readMember(reader, cp)
 	}
-	return memberInfos
+	return members
 }
 
-func readMember(reader *ClassReader, pool ConstantPool) *MemberInfo {
+func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 	return &MemberInfo{
-		constantPool:    pool,
-		accessFlag:      reader.readUint16(),
+		cp:              cp,
+		accessFlags:     reader.readUint16(),
 		nameIndex:       reader.readUint16(),
 		descriptorIndex: reader.readUint16(),
-		attributes:      readAttributes(reader, pool),
+		attributes:      readAttributes(reader, cp),
 	}
 }
 
-func (self *MemberInfo) AccessFlag() uint16 {
-	return self.accessFlag
+func (self *MemberInfo) AccessFlags() uint16 {
+	return self.accessFlags
 }
-
 func (self *MemberInfo) Name() string {
-	return self.constantPool.getUtf8(self.nameIndex)
+	return self.cp.getUtf8(self.nameIndex)
 }
-
 func (self *MemberInfo) Descriptor() string {
-	return self.constantPool.getUtf8(self.descriptorIndex)
+	return self.cp.getUtf8(self.descriptorIndex)
 }

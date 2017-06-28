@@ -1,64 +1,75 @@
 package classfile
 
+import "fmt"
+
+// Constant pool tags
 const (
-	CONSTANT_CLASS                = 7
-	CONSTANT_FIELD_REF            = 9
-	CONSTANT_METHOD_REF           = 10
-	CONSTANT_INTERFACE_METHOD_REF = 11
-	CONSTANT_STRING               = 8
-	CONSTANT_INTEGER              = 3
-	CONSTANT_FLOAT                = 4
-	CONSTANT_LONG                 = 5
-	CONSTANT_DOUBLE               = 6
-	CONSTANT_NAME_AND_TYPE        = 12
-	CONSTANT_UTF8                 = 1
-	CONSTANT_METHOD_HANDLE        = 15
-	CONSTANT_METHOD_TYPE          = 16
-	CONSTANT_INVOKE_DYNAMIC       = 18
+	CONSTANT_Class              = 7
+	CONSTANT_Fieldref           = 9
+	CONSTANT_Methodref          = 10
+	CONSTANT_InterfaceMethodref = 11
+	CONSTANT_String             = 8
+	CONSTANT_Integer            = 3
+	CONSTANT_Float              = 4
+	CONSTANT_Long               = 5
+	CONSTANT_Double             = 6
+	CONSTANT_NameAndType        = 12
+	CONSTANT_Utf8               = 1
+	CONSTANT_MethodHandle       = 15
+	CONSTANT_MethodType         = 16
+	CONSTANT_InvokeDynamic      = 18
 )
 
+/*
+cp_info {
+    u1 tag;
+    u1 info[];
+}
+*/
 type ConstantInfo interface {
 	readInfo(reader *ClassReader)
 }
 
-func readConstantInfo(reader *ClassReader, pool ConstantPool) ConstantInfo {
+func readConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {
 	tag := reader.readUint8()
-	constant := newConstantInfo(tag, pool)
-	constant.readInfo(reader)
-	return constant
+	fmt.Printf("tag: %v\n", tag)
+	c := newConstantInfo(tag, cp)
+	c.readInfo(reader)
+	return c
 }
 
-func newConstantInfo(tag uint8, pool ConstantPool) ConstantInfo {
+
+func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	switch tag {
-	case CONSTANT_INTEGER:
+	case CONSTANT_Integer:
 		return &ConstantIntegerInfo{}
-	case CONSTANT_FLOAT:
+	case CONSTANT_Float:
 		return &ConstantFloatInfo{}
-	case CONSTANT_LONG:
-		return &ConstantFloatInfo{}
-	case CONSTANT_DOUBLE:
+	case CONSTANT_Long:
+		return &ConstantLongInfo{}
+	case CONSTANT_Double:
 		return &ConstantDoubleInfo{}
-	case CONSTANT_UTF8:
+	case CONSTANT_Utf8:
 		return &ConstantUtf8Info{}
-	case CONSTANT_STRING:
-		return &ConstantStringInfo{pool: pool}
-	case CONSTANT_CLASS:
-		return &ConstantClassInfo{pool: pool}
-	case CONSTANT_FIELD_REF:
-		return &ConstantFieldRefInfo{ConstantMemberRefInfo{pool: pool}}
-	case CONSTANT_METHOD_REF:
-		return &ConstantMethodRefInfo{ConstantMemberRefInfo{pool: pool}}
-	case CONSTANT_INTERFACE_METHOD_REF:
-		return &ConstantInterfaceMethodRefInfo{ConstantMemberRefInfo{pool: pool}}
-	case CONSTANT_NAME_AND_TYPE:
+	case CONSTANT_String:
+		return &ConstantStringInfo{cp: cp}
+	case CONSTANT_Class:
+		return &ConstantClassInfo{cp: cp}
+	case CONSTANT_Fieldref:
+		return &ConstantFieldrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case CONSTANT_Methodref:
+		return &ConstantMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case CONSTANT_InterfaceMethodref:
+		return &ConstantInterfaceMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case CONSTANT_NameAndType:
 		return &ConstantNameAndTypeInfo{}
-	case CONSTANT_METHOD_TYPE:
+	case CONSTANT_MethodType:
 		return &ConstantMethodTypeInfo{}
-	case CONSTANT_METHOD_HANDLE:
+	case CONSTANT_MethodHandle:
 		return &ConstantMethodHandleInfo{}
-	case CONSTANT_INVOKE_DYNAMIC:
+	case CONSTANT_InvokeDynamic:
 		return &ConstantInvokeDynamicInfo{}
 	default:
-		panic(tag)
+		panic("java.lang.ClassFormatError: constant pool tag!")
 	}
 }

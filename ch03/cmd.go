@@ -1,11 +1,10 @@
 package main
 
-import (
-	"flag"
-	"fmt"
-	"os"
-)
+import "flag"
+import "fmt"
+import "os"
 
+// java [-options] class [args...]
 type Cmd struct {
 	helpFlag    bool
 	versionFlag bool
@@ -16,21 +15,15 @@ type Cmd struct {
 }
 
 func parseCmd() *Cmd {
-
 	cmd := &Cmd{}
 
 	flag.Usage = printUsage
-	// Set up XjreOption
-	flag.StringVar(&cmd.XjreOption, "Xjre", "", "path to jre")
-	// Set up helpFlag
 	flag.BoolVar(&cmd.helpFlag, "help", false, "print help message")
 	flag.BoolVar(&cmd.helpFlag, "?", false, "print help message")
-	// Set up versionFlag
 	flag.BoolVar(&cmd.versionFlag, "version", false, "print version and exit")
-	// Set up cpOption
 	flag.StringVar(&cmd.cpOption, "classpath", "", "classpath")
 	flag.StringVar(&cmd.cpOption, "cp", "", "classpath")
-
+	flag.StringVar(&cmd.XjreOption, "Xjre", "", "path to jre")
 	flag.Parse()
 
 	args := flag.Args()
@@ -40,9 +33,9 @@ func parseCmd() *Cmd {
 	}
 
 	return cmd
-
 }
 
 func printUsage() {
 	fmt.Printf("Usage: %s [-options] class [args...]\n", os.Args[0])
+	//flag.PrintDefaults()
 }

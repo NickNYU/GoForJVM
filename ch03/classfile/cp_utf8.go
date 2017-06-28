@@ -1,16 +1,17 @@
 package classfile
 
-import (
-	"fmt"
-	"unicode/utf16"
-)
+import "fmt"
+import "unicode/utf16"
 
+/*
+CONSTANT_Utf8_info {
+    u1 tag;
+    u2 length;
+    u1 bytes[length];
+}
+*/
 type ConstantUtf8Info struct {
 	str string
-}
-
-func (self *ConstantUtf8Info) Str() string {
-	return self.str
 }
 
 func (self *ConstantUtf8Info) readInfo(reader *ClassReader) {
@@ -19,8 +20,20 @@ func (self *ConstantUtf8Info) readInfo(reader *ClassReader) {
 	self.str = decodeMUTF8(bytes)
 }
 
+func (self *ConstantUtf8Info) Str() string {
+	return self.str
+}
+
+/*
 func decodeMUTF8(bytes []byte) string {
-	utflen := len(bytes)
+	return string(bytes) // not correct!
+}
+*/
+
+// mutf8 -> utf16 -> utf32 -> string
+// see java.io.DataInputStream.readUTF(DataInput)
+func decodeMUTF8(bytearr []byte) string {
+	utflen := len(bytearr)
 	chararr := make([]uint16, utflen)
 
 	var c, char2, char3 uint16
@@ -28,7 +41,7 @@ func decodeMUTF8(bytes []byte) string {
 	chararr_count := 0
 
 	for count < utflen {
-		c = uint16(bytes[count])
+		c = uint16(bytearr[count])
 		if c > 127 {
 			break
 		}
@@ -38,7 +51,7 @@ func decodeMUTF8(bytes []byte) string {
 	}
 
 	for count < utflen {
-		c = uint16(bytes[count])
+		c = uint16(bytearr[count])
 		switch c >> 4 {
 		case 0, 1, 2, 3, 4, 5, 6, 7:
 			/* 0xxxxxxx*/
@@ -51,7 +64,7 @@ func decodeMUTF8(bytes []byte) string {
 			if count > utflen {
 				panic("malformed input: partial character at end")
 			}
-			char2 = uint16(bytes[count-1])
+			char2 = uint16(bytearr[count-1])
 			if char2&0xC0 != 0x80 {
 				panic(fmt.Errorf("malformed input around byte %v", count))
 			}
@@ -63,8 +76,8 @@ func decodeMUTF8(bytes []byte) string {
 			if count > utflen {
 				panic("malformed input: partial character at end")
 			}
-			char2 = uint16(bytes[count-2])
-			char3 = uint16(bytes[count-1])
+			char2 = uint16(bytearr[count-2])
+			char3 = uint16(bytearr[count-1])
 			if char2&0xC0 != 0x80 || char3&0xC0 != 0x80 {
 				panic(fmt.Errorf("malformed input around byte %v", (count - 1)))
 			}

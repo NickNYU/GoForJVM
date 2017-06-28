@@ -4,26 +4,26 @@ import "fmt"
 
 /*
 ClassFile {
-	u4 magic
-	u2 minor_version
-	u2 major_version
-	u2 constant_pool_count
-	cp_info constant_pool[constant_pool_count-1]
-	u2 access_flags
-	u2 this_class
-	u2 super_class
-	u2 interfaces_count
-	u2 interfaces[interfaces_count]
-	u2 fields_count
-	field_info fields[fields_count]
-	u2 methods_count
-	method_info methods[methods_count]
-	u2 attributes_count
-	attribute_info attributes[attributes_count]
+    u4             magic;
+    u2             minor_version;
+    u2             major_version;
+    u2             constant_pool_count;
+    cp_info        constant_pool[constant_pool_count-1];
+    u2             access_flags;
+    u2             this_class;
+    u2             super_class;
+    u2             interfaces_count;
+    u2             interfaces[interfaces_count];
+    u2             fields_count;
+    field_info     fields[fields_count];
+    u2             methods_count;
+    method_info    methods[methods_count];
+    u2             attributes_count;
+    attribute_info attributes[attributes_count];
 }
 */
 type ClassFile struct {
-	magic        uint32
+	//magic      uint32
 	minorVersion uint16
 	majorVersion uint16
 	constantPool ConstantPool
@@ -36,7 +36,7 @@ type ClassFile struct {
 	attributes   []AttributeInfo
 }
 
-func Parse(classData []byte) (classffile *ClassFile, err error) {
+func Parse(classData []byte) (cf *ClassFile, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			var ok bool
@@ -46,9 +46,10 @@ func Parse(classData []byte) (classffile *ClassFile, err error) {
 			}
 		}
 	}()
-	classReader := &ClassReader{classData}
-	classfile := &ClassFile{}
-	classfile.read(classReader)
+
+	cr := &ClassReader{classData}
+	cf = &ClassFile{}
+	cf.read(cr)
 	return
 }
 
@@ -66,17 +67,15 @@ func (self *ClassFile) read(reader *ClassReader) {
 }
 
 func (self *ClassFile) readAndCheckMagic(reader *ClassReader) {
-	magicNum := reader.readUint32()
-	if magicNum != 0xCAFEBABE {
+	magic := reader.readUint32()
+	if magic != 0xCAFEBABE {
 		panic("java.lang.ClassFormatError: magic!")
 	}
-	self.magic = magicNum
 }
 
 func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
 	self.minorVersion = reader.readUint16()
 	self.majorVersion = reader.readUint16()
-
 	switch self.majorVersion {
 	case 45:
 		return
@@ -85,6 +84,7 @@ func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
 			return
 		}
 	}
+
 	panic("java.lang.UnsupportedClassVersionError!")
 }
 
@@ -106,19 +106,22 @@ func (self *ClassFile) Fields() []*MemberInfo {
 func (self *ClassFile) Methods() []*MemberInfo {
 	return self.methods
 }
+
 func (self *ClassFile) ClassName() string {
 	return self.constantPool.getClassName(self.thisClass)
 }
+
 func (self *ClassFile) SuperClassName() string {
 	if self.superClass > 0 {
 		return self.constantPool.getClassName(self.superClass)
 	}
 	return ""
 }
+
 func (self *ClassFile) InterfaceNames() []string {
-	interfaces := make([]string, len(self.interfaces))
+	interfaceNames := make([]string, len(self.interfaces))
 	for i, cpIndex := range self.interfaces {
-		interfaces[i] = self.constantPool.getClassName(cpIndex)
+		interfaceNames[i] = self.constantPool.getClassName(cpIndex)
 	}
-	return interfaces
+	return interfaceNames
 }
