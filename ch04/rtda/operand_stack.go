@@ -54,3 +54,25 @@ func (self *OperandStack) PopLong() int64 {
 	return int64(high)<<32 | int64(low)
 }
 
+func (self *OperandStack) PushDouble(val float64) {
+	bits := math.Float64bits(val)
+	self.PushLong(int64(bits))
+}
+
+func (self *OperandStack) PopDouble() float64 {
+	bits := uint64(self.PopLong())
+	return math.Float64frombits(bits)
+}
+
+func (self *OperandStack) PushRef(ref *Object) {
+	self.slots[self.size].ref = ref
+	self.size ++
+}
+
+func (self *OperandStack) PopRef() *Object {
+	self.size --
+	ref := self.slots[self.size].ref
+	self.slots[self.size].ref = nil
+	return ref
+}
+

@@ -2,8 +2,9 @@ package main
 
 import "fmt"
 import "strings"
-import "jvmgo/ch03/classfile"
-import "jvmgo/ch03/classpath"
+import "jvmgo/ch04/classfile"
+import "jvmgo/ch04/classpath"
+import "jvmgo/ch04/rtda"
 
 func main() {
 	cmd := parseCmd()
@@ -18,11 +19,30 @@ func main() {
 }
 
 func startJVM(cmd *Cmd) {
-	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
-	className := strings.Replace(cmd.class, ".", "/", -1)
-	cf := loadClass(className, cp)
-	fmt.Println(cmd.class)
-	printClassInfo(cf)
+	//cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	//className := strings.Replace(cmd.class, ".", "/", -1)
+	//cf := loadClass(className, cp)
+	//fmt.Println(cmd.class)
+	//printClassInfo(cf)
+	frame := rtda.NewFrame(100, 100)
+	testLocalVars()
+}
+
+func testLocalVars(vars rtda.LocalVars)  {
+	vars.SetInt(0, 100)
+	vars.SetInt(1, -100)
+	vars.SetLong(2, 2998924580)
+	vars.SetLong(2, -2998924580)
+	vars.SetFloat(6, 3.1415926)
+	vars.SetDouble(7, 2.71828182845)
+	vars.SetRef(9, nil)
+	println(vars.GetInt(0))
+	println(vars.GetInt(1))
+	println(vars.GetLong(2))
+	println(vars.GetLong(4))
+	println(vars.GetFloat(6))
+	println(vars.GetDouble(7))
+	vars.SetRef(9, nil)
 }
 
 func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
