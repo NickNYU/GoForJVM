@@ -1,7 +1,5 @@
 package classfile
 
-import "fmt"
-
 // Constant pool tags
 const (
 	CONSTANT_Class              = 7

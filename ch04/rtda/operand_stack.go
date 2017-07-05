@@ -1,19 +1,16 @@
 package rtda
 
-import (
-	"go/scanner"
-	"math"
-)
+import "math"
 
 type OperandStack struct {
-	size uint
+	size  uint
 	slots []Slot
 }
 
-func newOperandStack(maxStackSize uint) *OperandStack {
-	if maxStackSize > 0 {
+func newOperandStack(maxStack uint) *OperandStack {
+	if maxStack > 0 {
 		return &OperandStack{
-			slots: make([]Slot, maxStackSize),
+			slots: make([]Slot, maxStack),
 		}
 	}
 	return nil
@@ -21,11 +18,10 @@ func newOperandStack(maxStackSize uint) *OperandStack {
 
 func (self *OperandStack) PushInt(val int32) {
 	self.slots[self.size].num = val
-	self.size ++
+	self.size++
 }
-
 func (self *OperandStack) PopInt() int32 {
-	self.size --
+	self.size--
 	return self.slots[self.size].num
 }
 
@@ -34,31 +30,30 @@ func (self *OperandStack) PushFloat(val float32) {
 	self.slots[self.size].num = int32(bits)
 	self.size++
 }
-
 func (self *OperandStack) PopFloat() float32 {
 	self.size--
 	bits := uint32(self.slots[self.size].num)
 	return math.Float32frombits(bits)
 }
 
+// long consumes two slots
 func (self *OperandStack) PushLong(val int64) {
 	self.slots[self.size].num = int32(val)
-	self.slots[self.size+1].num = int32(val>>32)
+	self.slots[self.size+1].num = int32(val >> 32)
 	self.size += 2
 }
-
 func (self *OperandStack) PopLong() int64 {
 	self.size -= 2
-	low := self.slots[self.size].num
-	high := self.slots[self.size+1].num
+	low := uint32(self.slots[self.size].num)
+	high := uint32(self.slots[self.size+1].num)
 	return int64(high)<<32 | int64(low)
 }
 
+// double consumes two slots
 func (self *OperandStack) PushDouble(val float64) {
 	bits := math.Float64bits(val)
 	self.PushLong(int64(bits))
 }
-
 func (self *OperandStack) PopDouble() float64 {
 	bits := uint64(self.PopLong())
 	return math.Float64frombits(bits)
@@ -66,13 +61,11 @@ func (self *OperandStack) PopDouble() float64 {
 
 func (self *OperandStack) PushRef(ref *Object) {
 	self.slots[self.size].ref = ref
-	self.size ++
+	self.size++
 }
-
 func (self *OperandStack) PopRef() *Object {
-	self.size --
+	self.size--
 	ref := self.slots[self.size].ref
 	self.slots[self.size].ref = nil
 	return ref
 }
-

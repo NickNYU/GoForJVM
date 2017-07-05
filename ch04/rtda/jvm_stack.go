@@ -2,8 +2,8 @@ package rtda
 
 type Stack struct {
 	maxSize uint
-	size uint
-	_top *Frame
+	size    uint
+	_top    *Frame
 }
 
 func (self *Stack) push(frame *Frame) {
@@ -12,7 +12,7 @@ func (self *Stack) push(frame *Frame) {
 	}
 	frame.lower = self._top
 	self._top = frame
-	self.size ++
+	self.size++
 }
 
 func (self *Stack) pop() *Frame {
@@ -22,7 +22,7 @@ func (self *Stack) pop() *Frame {
 	frame := self._top
 	self._top = frame.lower
 	frame.lower = nil
-	self.size --
+	self.size--
 	return frame
 }
 
@@ -36,7 +36,7 @@ func (self *Stack) top() *Frame {
 func newStack(maxSize uint) *Stack {
 	return &Stack{
 		maxSize: maxSize,
-		size: 0,
-		_top: nil,
+		size:    0,
+		_top:    nil,
 	}
 }
