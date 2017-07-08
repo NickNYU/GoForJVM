@@ -6,10 +6,10 @@ import (
 	"math"
 )
 
-type DREM struct { base.NoOperandsInstruction }
-type FREM struct { base.NoOperandsInstruction }
-type IREM struct { base.NoOperandsInstruction }
-type LREM struct { base.NoOperandsInstruction }
+type DREM struct{ base.NoOperandsInstruction }
+type FREM struct{ base.NoOperandsInstruction }
+type IREM struct{ base.NoOperandsInstruction }
+type LREM struct{ base.NoOperandsInstruction }
 
 func (self *IREM) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
