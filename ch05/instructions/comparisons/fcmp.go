@@ -25,3 +25,11 @@ func _fcmp(frame *rtda.Frame, gFlag bool) {
 		stack.PushInt(-1)
 	}
 }
+
+func (self *FCMPG) Execute(frame *rtda.Frame) {
+	_fcmp(frame, true)
+}
+
+func (self *FCMPL) Execute(frame *rtda.Frame) {
+	_fcmp(frame, false)
+}

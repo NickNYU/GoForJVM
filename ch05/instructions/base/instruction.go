@@ -14,10 +14,6 @@ func (self *NoOperandsInstruction) FetchOperands(reader *BytecodeReader) {
 	// nothing to do
 }
 
-func (self *NoOperandsInstruction) Execute(frame *rtda.Frame) {
-
-}
-
 // Jump Instruction
 type BranchInstruction struct {
 	Offset int
