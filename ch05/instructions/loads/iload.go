@@ -10,7 +10,7 @@ type ILOAD_1 struct{ base.Index8Instruction }
 type ILOAD_2 struct{ base.Index8Instruction }
 type ILOAD_3 struct{ base.Index8Instruction }
 
-func _iload(frame *rtda.Frame, index uint)  {
+func _iload(frame *rtda.Frame, index uint) {
 	val := frame.LocalVars().GetInt(index)
 	frame.OperandStack().PushInt(val)
 }

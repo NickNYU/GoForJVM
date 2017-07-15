@@ -23,7 +23,7 @@ func startJVM(cmd *Cmd) {
 	//cf := loadClass(className, cp)
 	//fmt.Println(cmd.class)
 	//printClassInfo(cf)
-	frame := rtda.NewFrame(100, 100)
+	frame := rtda.newFrame(100, 100)
 	testLocalVars(frame.LocalVars())
 	testOperandStack(frame.OperandStack())
 }
