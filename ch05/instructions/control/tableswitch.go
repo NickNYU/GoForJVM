@@ -31,5 +31,5 @@ func (self *TABLE_SWITCH) Execute(frame *rtda.Frame) {
 	} else {
 		offset = int(self.defaultOffset)
 	}
-	base.Branch(frame, offset)
+	base.Jump(frame, offset)
 }

@@ -23,9 +23,9 @@ func (self *LOOKUP_SWITCH) Execute(frame *rtda.Frame) {
 	for i := int32(0); i < self.npairs*2; i += 2 {
 		if self.matchOffsets[i] == key {
 			offset := self.matchOffsets[i+1]
-			base.Branch(frame, int(offset))
+			base.Jump(frame, int(offset))
 			return
 		}
 	}
-	base.Branch(frame, int(self.defaultOffset))
+	base.Jump(frame, int(self.defaultOffset))
 }
