@@ -5,9 +5,10 @@ import (
 	"jvmgo/ch05/rtda"
 )
 
-// Jump if reference comparison succeeds
+// Jump if reference(address) comparison succeeds
 // EQ == Equals
 type IF_ACMPEQ struct{ base.BranchInstruction }
+
 // NE == Not Equals
 type IF_ACMPNE struct{ base.BranchInstruction }
 
@@ -24,7 +25,6 @@ func (self *IF_ACMPNE) Execute(frame *rtda.Frame) {
 		base.Jump(frame, self.Offset)
 	}
 }
-
 
 func _acmp(frame *rtda.Frame) bool {
 	stack := frame.OperandStack()
