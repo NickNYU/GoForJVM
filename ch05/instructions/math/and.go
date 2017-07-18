@@ -15,3 +15,11 @@ func (self *IAND) Execute(frame *rtda.Frame) {
 	result := val1 & val2
 	stack.PushInt(result)
 }
+
+func (self *LAND) Execute(frame *rtda.Frame) {
+	stack := frame.OperandStack()
+	val2 := stack.PopLong()
+	val1 := stack.PopLong()
+	result := val1 & val2
+	stack.PushLong(result)
+}
