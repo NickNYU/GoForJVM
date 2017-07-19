@@ -14,7 +14,7 @@ type I2L struct{ base.NoOperandsInstruction }
 
 
 // convert INT to byte
-func (self *I2B) Execute(frame rtda.Frame) {
+func (self *I2B) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	b := int32(int8(i))
@@ -22,7 +22,7 @@ func (self *I2B) Execute(frame rtda.Frame) {
 }
 
 // convert INT to short
-func (self *I2S) Execute(frame rtda.Frame) {
+func (self *I2S) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	s := int32(int16(i))
@@ -30,7 +30,7 @@ func (self *I2S) Execute(frame rtda.Frame) {
 }
 
 // convert INT to char
-func (self *I2C) Execute(frame rtda.Frame) {
+func (self *I2C) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	c := int32(uint16(i))
@@ -39,7 +39,7 @@ func (self *I2C) Execute(frame rtda.Frame) {
 
 
 // convert INT to float
-func (self *I2F) Execute(frame rtda.Frame) {
+func (self *I2F) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	f := float32(i)
@@ -47,7 +47,7 @@ func (self *I2F) Execute(frame rtda.Frame) {
 }
 
 // convert INT to double
-func (self *I2D) Execute(frame rtda.Frame) {
+func (self *I2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	d := float64(i)
@@ -55,7 +55,7 @@ func (self *I2D) Execute(frame rtda.Frame) {
 }
 
 // convert INT to long
-func (self *I2L) Execute(frame rtda.Frame) {
+func (self *I2L) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	l := int64(i)

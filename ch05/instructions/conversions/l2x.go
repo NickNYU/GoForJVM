@@ -10,7 +10,7 @@ type L2I struct{ base.NoOperandsInstruction }
 type L2D struct{ base.NoOperandsInstruction }
 
 // convert long to float
-func (self *L2F) Execute(frame rtda.Frame) {
+func (self *L2F) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	l := stack.PopLong()
 	f := float32(l)
@@ -18,7 +18,7 @@ func (self *L2F) Execute(frame rtda.Frame) {
 }
 
 // convert long to int
-func (self *L2I) Execute(frame rtda.Frame) {
+func (self *L2I) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	l := stack.PopLong()
 	i := int32(l)
@@ -26,7 +26,7 @@ func (self *L2I) Execute(frame rtda.Frame) {
 }
 
 // convert long to double
-func (self *L2D) Execute(frame rtda.Frame) {
+func (self *L2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	l := stack.PopLong()
 	d := float64(l)

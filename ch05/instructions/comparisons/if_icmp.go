@@ -70,5 +70,5 @@ func _getInts(frame *rtda.Frame) (val1, val2 int32) {
 	stack := frame.OperandStack()
 	val2 = stack.PopInt()
 	val1 = stack.PopInt()
-	return val1, val2
+	return
 }

@@ -10,7 +10,7 @@ type F2I struct{ base.NoOperandsInstruction }
 type F2L struct{ base.NoOperandsInstruction }
 
 // convert float to double
-func (self *F2D) Execute(frame rtda.Frame) {
+func (self *F2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	f := stack.PopFloat()
 	d := float64(f)
@@ -18,7 +18,7 @@ func (self *F2D) Execute(frame rtda.Frame) {
 }
 
 // convert float to int
-func (self *F2I) Execute(frame rtda.Frame) {
+func (self *F2I) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	f := stack.PopFloat()
 	i := int32(f)
@@ -26,7 +26,7 @@ func (self *F2I) Execute(frame rtda.Frame) {
 }
 
 // convert float to long
-func (self *F2L) Execute(frame rtda.Frame) {
+func (self *F2L) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	f := stack.PopFloat()
 	l := int64(f)

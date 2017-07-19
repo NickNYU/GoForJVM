@@ -7,8 +7,14 @@ import (
 
 // Compare Double
 type DCMPG struct{ base.NoOperandsInstruction }
+type DCMPL struct{ base.NoOperandsInstruction }
+
 
 func (self *DCMPG) Execute(frame *rtda.Frame) {
+	_dcmp(frame, true)
+}
+
+func (self *DCMPL) Execute(frame *rtda.Frame) {
 	_dcmp(frame, false)
 }
 
