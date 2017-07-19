@@ -1,72 +1,58 @@
 package comparisons
 
-import (
-	"jvmgo/ch05/instructions/base"
-	"jvmgo/ch05/rtda"
-)
+import "jvmgo/ch05/instructions/base"
+import "jvmgo/ch05/rtda"
 
-// Jump if int comparison succeeds
-// equals
+// Branch if int comparison succeeds
 type IF_ICMPEQ struct{ base.BranchInstruction }
 
-// not equals
+func (self *IF_ICMPEQ) Execute(frame *rtda.Frame) {
+	if val1, val2 := _icmpPop(frame); val1 == val2 {
+		base.Branch(frame, self.Offset)
+	}
+}
+
 type IF_ICMPNE struct{ base.BranchInstruction }
 
-// less than
+func (self *IF_ICMPNE) Execute(frame *rtda.Frame) {
+	if val1, val2 := _icmpPop(frame); val1 != val2 {
+		base.Branch(frame, self.Offset)
+	}
+}
+
 type IF_ICMPLT struct{ base.BranchInstruction }
 
-// less and equal
+func (self *IF_ICMPLT) Execute(frame *rtda.Frame) {
+	if val1, val2 := _icmpPop(frame); val1 < val2 {
+		base.Branch(frame, self.Offset)
+	}
+}
+
 type IF_ICMPLE struct{ base.BranchInstruction }
 
-// greater than
+func (self *IF_ICMPLE) Execute(frame *rtda.Frame) {
+	if val1, val2 := _icmpPop(frame); val1 <= val2 {
+		base.Branch(frame, self.Offset)
+	}
+}
+
 type IF_ICMPGT struct{ base.BranchInstruction }
 
-// greater equal
+func (self *IF_ICMPGT) Execute(frame *rtda.Frame) {
+	if val1, val2 := _icmpPop(frame); val1 > val2 {
+		base.Branch(frame, self.Offset)
+	}
+}
+
 type IF_ICMPGE struct{ base.BranchInstruction }
 
-func (self *IF_ICMPEQ) Execute(frame *rtda.Frame) {
-	val1, val2 := _getInts(frame)
-	if val1 == val2 {
-		base.Jump(frame, self.Offset)
-	}
-}
-
-func (self *IF_ICMPNE) Execute(frame *rtda.Frame) {
-	val1, val2 := _getInts(frame)
-	if val1 != val2 {
-		base.Jump(frame, self.Offset)
-	}
-}
-
-func (self *IF_ICMPLT) Execute(frame *rtda.Frame) {
-	val1, val2 := _getInts(frame)
-	if val1 < val2 {
-		base.Jump(frame, self.Offset)
-	}
-}
-
-func (self *IF_ICMPLE) Execute(frame *rtda.Frame) {
-	val1, val2 := _getInts(frame)
-	if val1 <= val2 {
-		base.Jump(frame, self.Offset)
-	}
-}
-
-func (self *IF_ICMPGT) Execute(frame *rtda.Frame) {
-	val1, val2 := _getInts(frame)
-	if val1 > val2 {
-		base.Jump(frame, self.Offset)
-	}
-}
-
 func (self *IF_ICMPGE) Execute(frame *rtda.Frame) {
-	val1, val2 := _getInts(frame)
-	if val1 >= val2 {
-		base.Jump(frame, self.Offset)
+	if val1, val2 := _icmpPop(frame); val1 >= val2 {
+		base.Branch(frame, self.Offset)
 	}
 }
 
-func _getInts(frame *rtda.Frame) (val1, val2 int32) {
+func _icmpPop(frame *rtda.Frame) (val1, val2 int32) {
 	stack := frame.OperandStack()
 	val2 = stack.PopInt()
 	val1 = stack.PopInt()

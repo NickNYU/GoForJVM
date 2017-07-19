@@ -202,12 +202,12 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &BIPUSH{}
 	case 0x11:
 		return &SIPUSH{}
-		// case 0x12:
-		// 	return &LDC{}
-		// case 0x13:
-		// 	return &LDC_W{}
-		// case 0x14:
-		// 	return &LDC2_W{}
+	// case 0x12:
+	// 	return &LDC{}
+	// case 0x13:
+	// 	return &LDC_W{}
+	// case 0x14:
+	// 	return &LDC2_W{}
 	case 0x15:
 		return &ILOAD{}
 	case 0x16:
@@ -258,22 +258,22 @@ func NewInstruction(opcode byte) base.Instruction {
 		return aload_2
 	case 0x2d:
 		return aload_3
-		// case 0x2e:
-		// 	return iaload
-		// case 0x2f:
-		// 	return laload
-		// case 0x30:
-		// 	return faload
-		// case 0x31:
-		// 	return daload
-		// case 0x32:
-		// 	return aaload
-		// case 0x33:
-		// 	return baload
-		// case 0x34:
-		// 	return caload
-		// case 0x35:
-		// 	return saload
+	// case 0x2e:
+	// 	return iaload
+	// case 0x2f:
+	// 	return laload
+	// case 0x30:
+	// 	return faload
+	// case 0x31:
+	// 	return daload
+	// case 0x32:
+	// 	return aaload
+	// case 0x33:
+	// 	return baload
+	// case 0x34:
+	// 	return caload
+	// case 0x35:
+	// 	return saload
 	case 0x36:
 		return &ISTORE{}
 	case 0x37:
@@ -324,22 +324,22 @@ func NewInstruction(opcode byte) base.Instruction {
 		return astore_2
 	case 0x4e:
 		return astore_3
-		// case 0x4f:
-		// 	return iastore
-		// case 0x50:
-		// 	return lastore
-		// case 0x51:
-		// 	return fastore
-		// case 0x52:
-		// 	return dastore
-		// case 0x53:
-		// 	return aastore
-		// case 0x54:
-		// 	return bastore
-		// case 0x55:
-		// 	return castore
-		// case 0x56:
-		// 	return sastore
+	// case 0x4f:
+	// 	return iastore
+	// case 0x50:
+	// 	return lastore
+	// case 0x51:
+	// 	return fastore
+	// case 0x52:
+	// 	return dastore
+	// case 0x53:
+	// 	return aastore
+	// case 0x54:
+	// 	return bastore
+	// case 0x55:
+	// 	return castore
+	// case 0x56:
+	// 	return sastore
 	case 0x57:
 		return pop
 	case 0x58:
@@ -502,77 +502,77 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &IF_ACMPNE{}
 	case 0xa7:
 		return &GOTO{}
-		// case 0xa8:
-		// 	return &JSR{}
-		// case 0xa9:
-		// 	return &RET{}
+	// case 0xa8:
+	// 	return &JSR{}
+	// case 0xa9:
+	// 	return &RET{}
 	case 0xaa:
 		return &TABLE_SWITCH{}
 	case 0xab:
 		return &LOOKUP_SWITCH{}
-		// case 0xac:
-		// 	return ireturn
-		// case 0xad:
-		// 	return lreturn
-		// case 0xae:
-		// 	return freturn
-		// case 0xaf:
-		// 	return dreturn
-		// case 0xb0:
-		// 	return areturn
-		// case 0xb1:
-		// 	return _return
-		//	case 0xb2:
-		//		return &GET_STATIC{}
-		// case 0xb3:
-		// 	return &PUT_STATIC{}
-		// case 0xb4:
-		// 	return &GET_FIELD{}
-		// case 0xb5:
-		// 	return &PUT_FIELD{}
-		//	case 0xb6:
-		//		return &INVOKE_VIRTUAL{}
-		// case 0xb7:
-		// 	return &INVOKE_SPECIAL{}
-		// case 0xb8:
-		// 	return &INVOKE_STATIC{}
-		// case 0xb9:
-		// 	return &INVOKE_INTERFACE{}
-		// case 0xba:
-		// 	return &INVOKE_DYNAMIC{}
-		// case 0xbb:
-		// 	return &NEW{}
-		// case 0xbc:
-		// 	return &NEW_ARRAY{}
-		// case 0xbd:
-		// 	return &ANEW_ARRAY{}
-		// case 0xbe:
-		// 	return arraylength
-		// case 0xbf:
-		// 	return athrow
-		// case 0xc0:
-		// 	return &CHECK_CAST{}
-		// case 0xc1:
-		// 	return &INSTANCE_OF{}
-		// case 0xc2:
-		// 	return monitorenter
-		// case 0xc3:
-		// 	return monitorexit
+	// case 0xac:
+	// 	return ireturn
+	// case 0xad:
+	// 	return lreturn
+	// case 0xae:
+	// 	return freturn
+	// case 0xaf:
+	// 	return dreturn
+	// case 0xb0:
+	// 	return areturn
+	// case 0xb1:
+	// 	return _return
+	//	case 0xb2:
+	//		return &GET_STATIC{}
+	// case 0xb3:
+	// 	return &PUT_STATIC{}
+	// case 0xb4:
+	// 	return &GET_FIELD{}
+	// case 0xb5:
+	// 	return &PUT_FIELD{}
+	//	case 0xb6:
+	//		return &INVOKE_VIRTUAL{}
+	// case 0xb7:
+	// 	return &INVOKE_SPECIAL{}
+	// case 0xb8:
+	// 	return &INVOKE_STATIC{}
+	// case 0xb9:
+	// 	return &INVOKE_INTERFACE{}
+	// case 0xba:
+	// 	return &INVOKE_DYNAMIC{}
+	// case 0xbb:
+	// 	return &NEW{}
+	// case 0xbc:
+	// 	return &NEW_ARRAY{}
+	// case 0xbd:
+	// 	return &ANEW_ARRAY{}
+	// case 0xbe:
+	// 	return arraylength
+	// case 0xbf:
+	// 	return athrow
+	// case 0xc0:
+	// 	return &CHECK_CAST{}
+	// case 0xc1:
+	// 	return &INSTANCE_OF{}
+	// case 0xc2:
+	// 	return monitorenter
+	// case 0xc3:
+	// 	return monitorexit
 	case 0xc4:
 		return &WIDE{}
-		// case 0xc5:
-		// 	return &MULTI_ANEW_ARRAY{}
+	// case 0xc5:
+	// 	return &MULTI_ANEW_ARRAY{}
 	case 0xc6:
 		return &IFNULL{}
 	case 0xc7:
 		return &IFNONNULL{}
 	case 0xc8:
 		return &GOTO_W{}
-		// case 0xc9:
-		// 	return &JSR_W{}
-		// case 0xca: breakpoint
-		// case 0xfe: impdep1
-		// case 0xff: impdep2
+	// case 0xc9:
+	// 	return &JSR_W{}
+	// case 0xca: breakpoint
+	// case 0xfe: impdep1
+	// case 0xff: impdep2
 	default:
 		panic(fmt.Errorf("Unsupported opcode: 0x%x!", opcode))
 	}

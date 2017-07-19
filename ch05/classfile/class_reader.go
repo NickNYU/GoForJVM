@@ -27,7 +27,6 @@ func (self *ClassReader) readUint32() uint32 {
 	return val
 }
 
-// u8
 func (self *ClassReader) readUint64() uint64 {
 	val := binary.BigEndian.Uint64(self.data)
 	self.data = self.data[8:]

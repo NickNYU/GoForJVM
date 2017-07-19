@@ -6,8 +6,6 @@ Deprecated_attribute {
     u4 attribute_length;
 }
 */
-type MarkerAttribute struct{}
-
 type DeprecatedAttribute struct {
 	MarkerAttribute
 }
@@ -21,6 +19,8 @@ Synthetic_attribute {
 type SyntheticAttribute struct {
 	MarkerAttribute
 }
+
+type MarkerAttribute struct{}
 
 func (self *MarkerAttribute) readInfo(reader *ClassReader) {
 	// read nothing

@@ -1,9 +1,7 @@
 package control
 
-import (
-	"jvmgo/ch05/instructions/base"
-	"jvmgo/ch05/rtda"
-)
+import "jvmgo/ch05/instructions/base"
+import "jvmgo/ch05/rtda"
 
 /*
 lookupswitch
@@ -18,7 +16,6 @@ npairs3
 npairs4
 match-offset pairs...
 */
-
 // Access jump table by key match and jump
 type LOOKUP_SWITCH struct {
 	defaultOffset int32
@@ -38,9 +35,9 @@ func (self *LOOKUP_SWITCH) Execute(frame *rtda.Frame) {
 	for i := int32(0); i < self.npairs*2; i += 2 {
 		if self.matchOffsets[i] == key {
 			offset := self.matchOffsets[i+1]
-			base.Jump(frame, int(offset))
+			base.Branch(frame, int(offset))
 			return
 		}
 	}
-	base.Jump(frame, int(self.defaultOffset))
+	base.Branch(frame, int(self.defaultOffset))
 }

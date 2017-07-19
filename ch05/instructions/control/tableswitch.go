@@ -1,9 +1,7 @@
 package control
 
-import (
-	"jvmgo/ch05/instructions/base"
-	"jvmgo/ch05/rtda"
-)
+import "jvmgo/ch05/instructions/base"
+import "jvmgo/ch05/rtda"
 
 /*
 tableswitch
@@ -48,5 +46,6 @@ func (self *TABLE_SWITCH) Execute(frame *rtda.Frame) {
 	} else {
 		offset = int(self.defaultOffset)
 	}
-	base.Jump(frame, offset)
+
+	base.Branch(frame, offset)
 }

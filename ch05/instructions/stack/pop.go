@@ -1,12 +1,10 @@
 package stack
 
-import (
-	"jvmgo/ch05/instructions/base"
-	"jvmgo/ch05/rtda"
-)
+import "jvmgo/ch05/instructions/base"
+import "jvmgo/ch05/rtda"
 
+// Pop the top operand stack value
 type POP struct{ base.NoOperandsInstruction }
-type POP2 struct{ base.NoOperandsInstruction }
 
 /*
 bottom -> top
@@ -19,6 +17,9 @@ func (self *POP) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	stack.PopSlot()
 }
+
+// Pop the top one or two operand stack values
+type POP2 struct{ base.NoOperandsInstruction }
 
 /*
 bottom -> top

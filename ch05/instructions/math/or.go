@@ -6,9 +6,6 @@ import "jvmgo/ch05/rtda"
 // Boolean OR int
 type IOR struct{ base.NoOperandsInstruction }
 
-// Boolean OR long
-type LOR struct{ base.NoOperandsInstruction }
-
 func (self *IOR) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopInt()
@@ -16,6 +13,9 @@ func (self *IOR) Execute(frame *rtda.Frame) {
 	result := v1 | v2
 	stack.PushInt(result)
 }
+
+// Boolean OR long
+type LOR struct{ base.NoOperandsInstruction }
 
 func (self *LOR) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

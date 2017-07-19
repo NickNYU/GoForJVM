@@ -1,40 +1,40 @@
 package loads
 
-import (
-	"jvmgo/ch05/instructions/base"
-	"jvmgo/ch05/rtda"
-)
+import "jvmgo/ch05/instructions/base"
+import "jvmgo/ch05/rtda"
 
-// Load reference(address) from local variable
+// Load double from local variable
 type DLOAD struct{ base.Index8Instruction }
-type DLOAD_0 struct{ base.Index8Instruction }
-type DLOAD_1 struct{ base.Index8Instruction }
-type DLOAD_2 struct{ base.Index8Instruction }
-type DLOAD_3 struct{ base.Index8Instruction }
-
-func _dload(frame *rtda.Frame, index uint) {
-	d := frame.LocalVars().GetDouble(index)
-	frame.OperandStack().PushDouble(d)
-}
 
 func (self *DLOAD) Execute(frame *rtda.Frame) {
-	index := self.Index
-	_dload(frame, index)
+	_dload(frame, uint(self.Index))
 }
+
+type DLOAD_0 struct{ base.NoOperandsInstruction }
 
 func (self *DLOAD_0) Execute(frame *rtda.Frame) {
 	_dload(frame, 0)
 }
 
+type DLOAD_1 struct{ base.NoOperandsInstruction }
+
 func (self *DLOAD_1) Execute(frame *rtda.Frame) {
 	_dload(frame, 1)
 }
+
+type DLOAD_2 struct{ base.NoOperandsInstruction }
 
 func (self *DLOAD_2) Execute(frame *rtda.Frame) {
 	_dload(frame, 2)
 }
 
+type DLOAD_3 struct{ base.NoOperandsInstruction }
+
 func (self *DLOAD_3) Execute(frame *rtda.Frame) {
 	_dload(frame, 3)
 }
 
+func _dload(frame *rtda.Frame, index uint) {
+	val := frame.LocalVars().GetDouble(index)
+	frame.OperandStack().PushDouble(val)
+}

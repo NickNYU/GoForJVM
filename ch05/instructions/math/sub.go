@@ -6,15 +6,6 @@ import "jvmgo/ch05/rtda"
 // Subtract double
 type DSUB struct{ base.NoOperandsInstruction }
 
-// Subtract float
-type FSUB struct{ base.NoOperandsInstruction }
-
-// Subtract int
-type ISUB struct{ base.NoOperandsInstruction }
-
-// Subtract long
-type LSUB struct{ base.NoOperandsInstruction }
-
 func (self *DSUB) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopDouble()
@@ -22,6 +13,9 @@ func (self *DSUB) Execute(frame *rtda.Frame) {
 	result := v1 - v2
 	stack.PushDouble(result)
 }
+
+// Subtract float
+type FSUB struct{ base.NoOperandsInstruction }
 
 func (self *FSUB) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -31,6 +25,9 @@ func (self *FSUB) Execute(frame *rtda.Frame) {
 	stack.PushFloat(result)
 }
 
+// Subtract int
+type ISUB struct{ base.NoOperandsInstruction }
+
 func (self *ISUB) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopInt()
@@ -38,6 +35,9 @@ func (self *ISUB) Execute(frame *rtda.Frame) {
 	result := v1 - v2
 	stack.PushInt(result)
 }
+
+// Subtract long
+type LSUB struct{ base.NoOperandsInstruction }
 
 func (self *LSUB) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
